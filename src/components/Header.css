@@ -1,0 +1,94 @@
+.header {
+  position: relative;
+  padding: 0.2rem;
+}
+
+.nav-bar {
+  background-color: rgba(25, 75, 58, 0.7);
+  width: 100%;
+  height: 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-bar .logo a {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-left: 40px;
+  color: #fff;
+}
+
+.nav-bar .links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-bar .links a {
+  color: #fff;
+  font-size: 1rem;
+  transition: color 0.2s ease;
+}
+
+.nav-bar .links a:hover,
+.nav-bar .links a.active {
+  color: rgb(254, 2, 2);
+}
+
+.toggele_btn {
+  color: #fff;
+  margin-right: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: none;
+}
+
+.action_btn {
+  margin-right: 40px;
+  background-color: rgb(229, 125, 7);
+  color: #fff !important;
+  padding: 0.5rem 1rem;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.action_btn:hover {
+  transform: scale(1.05);
+  color: #fff !important;
+}
+
+.action_btn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 992px) {
+  .nav-bar .links,
+  .nav-bar .action_btn {
+    display: none;
+  }
+
+  .nav-bar .toggele_btn {
+    display: block;
+  }
+
+  .nav-bar .links.open {
+    display: flex;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: rgba(25, 75, 58, 0.95);
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+    border-bottom-left-radius: 8px;
+    z-index: 20;
+  }
+}

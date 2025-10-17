@@ -1,0 +1,28 @@
+.coin-layout {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 2fr 1fr;
+}
+
+.chart-card {
+  min-height: 350px;
+}
+
+.coin-desc {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.coin-stats {
+  margin-top: 0.8rem;
+}
+
+.coin-stats > div {
+  margin: 0.5rem 0;
+}
+
+@media (max-width: 900px) {
+  .coin-layout {
+    grid-template-columns: 1fr;
+  }
+}

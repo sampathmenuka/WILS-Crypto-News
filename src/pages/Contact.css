@@ -1,0 +1,22 @@
+.contact-layout {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1.4fr 1fr;
+  align-items: start;
+}
+
+.map-placeholder {
+  background: rgba(255, 255, 255, 0.05);
+  height: 240px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: #bdbdbd;
+}
+
+@media (max-width: 900px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}
