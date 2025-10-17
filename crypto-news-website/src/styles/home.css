@@ -1,0 +1,458 @@
+/* Layout helpers */
+.container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+}
+
+.center { 
+    text-align: center; 
+}
+
+.muted { 
+    color: rgba(255,255,255,0.7); 
+}
+
+/* Buttons */
+.btn { 
+    padding: 12px 24px; 
+    border-radius: 25px; 
+    font-weight: 600; 
+    text-decoration: none; 
+    display: inline-block; 
+    transition: all 0.3s ease; 
+    border: 2px solid transparent; 
+    cursor: pointer;
+}
+
+.btn-primary { 
+    background: rgb(229,125,7); 
+    color: #fff; 
+}
+
+.btn-primary:hover { 
+    background: rgb(254,2,2); 
+    transform: translateY(-2px); 
+}
+
+.btn-secondary { 
+    background: transparent; 
+    color: #fff; 
+    border-color: rgba(255,255,255,0.3); 
+}
+
+.btn-secondary:hover { 
+    border-color: rgb(229,125,7); 
+    color: rgb(229,125,7); 
+}
+
+/* Hero Section */
+.hero { 
+    padding: 100px 20px 60px; 
+    text-align: center; 
+}
+
+.hero-content {
+    margin-bottom: 60px;
+}
+
+.hero-title { 
+    color: #fff; 
+    font-size: 3.5rem; 
+    margin-bottom: 20px; 
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.hero-title .highlight { 
+    color: rgb(229,125,7); 
+}
+
+.hero-subtitle { 
+    color: rgba(255,255,255,0.8); 
+    font-size: 1.2rem;
+    max-width: 720px; 
+    margin: 0 auto 40px; 
+    line-height: 1.6;
+}
+
+.hero-buttons { 
+    display: flex; 
+    gap: 20px; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+}
+
+.hero-stats { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    gap: 30px; 
+    max-width: 900px; 
+    margin: 0 auto; 
+}
+
+.stat-card { 
+    padding: 30px 20px; 
+    border-radius: 15px; 
+    background: rgba(255,255,255,0.06); 
+    border: 1px solid rgba(255,255,255,0.1); 
+    transition: all 0.3s ease; 
+}
+
+.stat-card:hover { 
+    transform: translateY(-5px); 
+    background: rgba(255,255,255,0.08); 
+    border-color: rgba(229,125,7,0.5);
+}
+
+.stat-icon { 
+    align-items: center;
+    background: rgba(229,125,7,0.15);
+    border: 2px solid rgba(229,125,7,0.6);
+    border-radius: 999px;
+    display: flex;
+    font-size: 0.85rem;
+    font-weight: 700;
+    height: 48px;
+    justify-content: center;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    width: 96px;
+}
+
+.stat-card h3 { 
+    color: #fff; 
+    font-size: 1.3rem;
+    margin-bottom: 8px; 
+}
+
+.stat-card p { 
+    color: rgba(255,255,255,0.7); 
+    font-size: 0.9rem;
+}
+
+/* Featured News Section */
+.featured-news { 
+    padding: 80px 20px; 
+    background: rgba(255,255,255,0.02); 
+}
+
+.section-title { 
+    color: #fff; 
+    font-size: 2.5rem; 
+    text-align: center; 
+    margin-bottom: 50px; 
+    font-weight: 700;
+}
+
+.news-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 30px; 
+    margin-bottom: 40px;
+}
+
+.news-card { 
+    border-radius: 15px; 
+    overflow: hidden; 
+    background: rgba(255,255,255,0.06); 
+    border: 1px solid rgba(255,255,255,0.1); 
+    transition: all 0.3s ease; 
+}
+
+.news-card:hover { 
+    transform: translateY(-10px); 
+    border-color: rgb(229,125,7); 
+    box-shadow: 0 10px 40px rgba(229,125,7,0.2); 
+}
+
+.news-card img { 
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+    background: linear-gradient(135deg, #1a4b3a, #2d5a4a);
+}
+
+.news-card-content { 
+    padding: 20px; 
+}
+
+.badge { 
+    background: rgb(229,125,7); 
+    color: #fff; 
+    padding: 5px 12px; 
+    border-radius: 20px; 
+    font-size: 0.75rem; 
+    font-weight: 700; 
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.news-card h3 { 
+    color: #fff; 
+    margin: 10px 0; 
+    font-size: 1.2rem; 
+    line-height: 1.4; 
+}
+
+.news-date { 
+    color: rgba(255,255,255,0.6); 
+    font-size: 0.85rem; 
+    margin-bottom: 10px; 
+}
+
+.news-excerpt { 
+    color: rgba(255,255,255,0.75); 
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.read-more { 
+    color: rgb(229,125,7); 
+    font-weight: 600; 
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.read-more:hover { 
+    color: rgb(254,2,2); 
+    transform: translateX(5px);
+}
+
+.skeleton { 
+    height: 340px; 
+    background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.08), rgba(255,255,255,0.05)); 
+    background-size: 200% 100%;
+    animation: pulse 1.5s infinite; 
+}
+
+@keyframes pulse { 
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Markets Preview */
+.market-overview { 
+    padding: 80px 20px; 
+}
+
+.market-table-wrapper { 
+    border-radius: 15px; 
+    overflow: auto; 
+    background: rgba(255,255,255,0.06); 
+    border: 1px solid rgba(255,255,255,0.1); 
+    margin-bottom: 40px;
+}
+
+.market-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+.market-table th, 
+.market-table td { 
+    color: #fff; 
+    padding: 18px 15px; 
+    border-bottom: 1px solid rgba(255,255,255,0.1); 
+    text-align: left; 
+}
+
+.market-table thead { 
+    background: rgba(25,75,58,0.5); 
+}
+
+.market-table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.market-table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.market-table tbody tr:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.coin-cell { 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+}
+
+.coin-cell img { 
+    width: 28px; 
+    height: 28px; 
+    border-radius: 50%; 
+}
+
+.coin-cell a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.coin-cell a:hover {
+    color: rgb(229,125,7);
+}
+
+.coin-cell .symbol { 
+    color: rgba(255,255,255,0.5); 
+    font-size: 0.85rem; 
+    margin-left: 5px; 
+}
+
+.positive { 
+    color: #00e08a; 
+    font-weight: 600;
+}
+
+.negative { 
+    color: #ff5c5c; 
+    font-weight: 600;
+}
+
+.row-skeleton td { 
+    height: 60px; 
+    background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.08), rgba(255,255,255,0.04)); 
+    background-size: 200% 100%;
+    animation: pulse 1.5s infinite; 
+    border: none; 
+}
+
+/* Newsletter Section */
+.newsletter { 
+    padding: 80px 20px; 
+    background: linear-gradient(135deg, rgba(25,75,58,0.4), rgba(229,125,7,0.2)); 
+}
+
+.newsletter-content { 
+    text-align: center; 
+    max-width: 700px; 
+    margin: 0 auto; 
+}
+
+.newsletter-content h2 { 
+    color: #fff; 
+    font-size: 2.5rem; 
+    margin-bottom: 15px; 
+    font-weight: 700;
+}
+
+.newsletter-content p { 
+    color: rgba(255,255,255,0.8); 
+    font-size: 1.1rem;
+    margin-bottom: 30px; 
+}
+
+.newsletter-form { 
+    display: flex; 
+    gap: 15px; 
+    justify-content: center; 
+    flex-wrap: wrap;
+}
+
+.newsletter-form input { 
+    flex: 1;
+    min-width: 280px;
+    padding: 14px 24px; 
+    border-radius: 25px; 
+    border: 1px solid rgba(255,255,255,0.25); 
+    background: rgba(255,255,255,0.1); 
+    color: #fff; 
+    font-size: 1rem;
+}
+
+.newsletter-form input::placeholder { 
+    color: rgba(255,255,255,0.5); 
+}
+
+.newsletter-form input:focus {
+    outline: none;
+    border-color: rgb(229,125,7);
+    background: rgba(255,255,255,0.15);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero-title { 
+        font-size: 2.8rem; 
+    }
+    
+    .news-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title { 
+        font-size: 2.2rem; 
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .market-table th,
+    .market-table td {
+        padding: 12px 10px;
+        font-size: 0.9rem;
+    }
+    
+    .coin-cell img {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero { 
+        padding: 60px 15px 40px; 
+    }
+    
+    .hero-title { 
+        font-size: 1.8rem; 
+    }
+    
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .news-card img { 
+        height: 160px; 
+    }
+    
+    .newsletter-form { 
+        flex-direction: column; 
+    }
+    
+    .newsletter-form input {
+        width: 100%;
+    }
+    
+    .market-table-wrapper {
+        overflow-x: scroll;
+    }
+    
+    .market-table {
+        min-width: 600px;
+    }
+}
