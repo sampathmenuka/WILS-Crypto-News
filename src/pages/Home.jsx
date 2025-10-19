@@ -1,4 +1,8 @@
 import { Link } from 'react-router-dom';
+import { useMemo } from 'react';
+import usePolling from '../hooks/usePolling';
+import { fetchMarkets } from '../utils/api';
+import { formatCurrency } from '../utils/format';
 import './Home.css';
 
 const highlights = [
@@ -25,12 +29,17 @@ const stats = [
   { label: 'Avg. alert time', value: '42s' },
 ];
 
-const signals = [
-  { symbol: 'BTC', name: 'Bitcoin', price: '$67,820', change: '+1.45%' },
-  { symbol: 'ETH', name: 'Ethereum', price: '$3,120', change: '+0.82%' },
-  { symbol: 'SOL', name: 'Solana', price: '$168.40', change: '-0.65%' },
-  { symbol: 'OP', name: 'Optimism', price: '$3.14', change: '+3.20%' },
-];
+// Helper to format relative update time
+const formatUpdated = (date) => {
+  if (!date) return '';
+  const diff = Math.floor((Date.now() - date.getTime()) / 1000);
+  if (diff < 5) return 'just now';
+  if (diff < 60) return `${diff}s ago`;
+  const m = Math.floor(diff / 60);
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  return `${h}h ago`;
+};
 
 const briefs = [
   {
@@ -51,6 +60,28 @@ const briefs = [
 ];
 
 function Home() {
+  const { data: markets, loading: liveLoading, error: liveError, lastUpdated, refresh } = usePolling(
+    fetchMarkets,
+    30000,
+    true
+  );
+
+  const signals = useMemo(() => {
+    if (!markets || !Array.isArray(markets)) return [];
+    // Pick top movers by absolute 24h change percentage, then take top 4
+    const ranked = [...markets]
+      .filter((c) => typeof c.price_change_percentage_24h === 'number')
+      .sort((a, b) => Math.abs(b.price_change_percentage_24h) - Math.abs(a.price_change_percentage_24h))
+      .slice(0, 4);
+    return ranked.map((c) => ({
+      symbol: (c.symbol || '').toUpperCase(),
+      name: c.name,
+      price: formatCurrency(c.current_price, 6),
+      change: `${(c.price_change_percentage_24h >= 0 ? '+' : '')}${(c.price_change_percentage_24h || 0).toFixed(2)}%`,
+      direction: (c.price_change_percentage_24h || 0) >= 0 ? 'up' : 'down',
+    }));
+  }, [markets]);
+
   return (
     <div className="home">
       <section className="hero">
@@ -81,9 +112,17 @@ function Home() {
             <div className="widget-card">
               <div className="widget-header">
                 <span className="pill pill-soft">Live snapshot</span>
-                <span className="widget-time">Updated 30s ago</span>
+                <span className="widget-time">
+                  {liveLoading ? 'Updating…' : liveError ? 'Failed to update' : `Updated ${formatUpdated(lastUpdated)}`}
+                </span>
               </div>
               <ul className="widget-list">
+                {liveError && (
+                  <li style={{ color: '#ff859f' }}>Error loading markets</li>
+                )}
+                {!liveError && signals.length === 0 && (
+                  <li className="muted">{liveLoading ? 'Loading…' : 'No data available'}</li>
+                )}
                 {signals.map((signal) => (
                   <li key={signal.symbol}>
                     <div className="widget-identity">
@@ -92,7 +131,7 @@ function Home() {
                     </div>
                     <div className="widget-pricing">
                       <span className="widget-price">{signal.price}</span>
-                      <span className={`widget-change ${signal.change.startsWith('-') ? 'down' : 'up'}`}>
+                      <span className={`widget-change ${signal.direction}`}>
                         {signal.change}
                       </span>
                     </div>
