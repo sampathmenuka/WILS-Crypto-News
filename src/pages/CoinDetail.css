@@ -1,6 +1,6 @@
 .coin-layout {
   display: grid;
-  gap: 1rem;
+  gap: 1.2rem;
   grid-template-columns: 2fr 1fr;
 }
 
@@ -9,16 +9,23 @@
 }
 
 .coin-desc {
-  margin: 0.5rem 0;
-  line-height: 1.5;
+  margin: 0.6rem 0 0.2rem;
+  line-height: 1.55;
+  color: rgba(214, 219, 244, 0.86);
 }
 
 .coin-stats {
-  margin-top: 0.8rem;
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.45rem;
 }
 
 .coin-stats > div {
-  margin: 0.5rem 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 0.6rem 0.7rem;
 }
 
 @media (max-width: 900px) {

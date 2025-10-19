@@ -54,7 +54,7 @@ function Markets() {
           <thead>
             <tr>
               <th onClick={() => handleSort('market_cap_rank')}>#</th>
-              <th onClick={() => handleSort('name')}>Name</th>
+              <th onClick={() => handleSort('name')}>Asset</th>
               <th onClick={() => handleSort('symbol')}>Symbol</th>
               <th onClick={() => handleSort('current_price')}>Price</th>
               <th onClick={() => handleSort('price_change_percentage_24h')}>24h %</th>
@@ -69,7 +69,12 @@ function Markets() {
                 <tr key={coin.id}>
                   <td>{coin.market_cap_rank ?? '-'}</td>
                   <td>
-                    <Link to={`/coin/${coin.id}`}>{coin.name}</Link>
+                    <Link to={`/coin/${coin.id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '.55rem' }}>
+                      {coin.image && (
+                        <img src={coin.image} alt={coin.name} width="20" height="20" style={{ borderRadius: '50%' }} />
+                      )}
+                      <span>{coin.name}</span>
+                    </Link>
                   </td>
                   <td>{(coin.symbol || '').toUpperCase()}</td>
                   <td>{formatCurrency(coin.current_price, 6)}</td>
