@@ -2,19 +2,39 @@ const API_BASE = 'https://api.coingecko.com/api/v3';
 const API_KEY = '72fe925db1b3419189bc8d4549e90e9a';
 
 const fetchWithAuth = async (url) => {
-  const response = await fetch(url, {
-    headers: {
-      'x-cg-demo-api-key': API_KEY,
-    },
-  });
-  if (!response.ok) {
-    throw new Error(`API request failed: ${response.status}`);
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'x-cg-demo-api-key': API_KEY,
+      },
+    });
+    
+    if (!response.ok) {
+      console.error(`API Error: ${response.status} ${response.statusText}`);
+      // Try without auth header as fallback for demo API
+      const fallbackResponse = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        },
+      });
+      if (!fallbackResponse.ok) {
+        throw new Error(`API request failed: ${fallbackResponse.status}`);
+      }
+      return fallbackResponse.json();
+    }
+    
+    return response.json();
+  } catch (error) {
+    console.error('API fetch error:', error);
+    throw error;
   }
-  return response.json();
 };
 
 export const fetchMarkets = async () => {
-  const url = `${API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&price_change_percentage=24h`;
+  const url = `${API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h`;
   return fetchWithAuth(url);
 };
 
