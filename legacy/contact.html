@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - WILS Crypto News</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <header>
+    <div class="nav-bar">
+      <div class="logo"><a href="index.html">WILS</a></div>
+      <ul class="links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="markets.html">Markets</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+      <a href="markets.html" class="action_btn">Get Started</a>
+      <div class="toggele_btn" aria-label="Toggle navigation" role="button"><i class="fa-solid fa-bars"></i></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="page-header">
+      <h1>Contact Us</h1>
+      <span class="muted">We usually reply within 1-2 business days.</span>
+    </div>
+
+    <section class="grid" style="grid-template-columns: 1.4fr 1fr; align-items:start;">
+      <form class="form" id="contact-form">
+        <div class="form-row">
+          <div style="flex:1 1 280px">
+            <label for="name" class="muted">Name</label>
+            <input id="name" name="name" required placeholder="Your name" />
+          </div>
+          <div style="flex:1 1 280px">
+            <label for="email" class="muted">Email</label>
+            <input id="email" name="email" type="email" required placeholder="name@example.com" />
+          </div>
+        </div>
+        <div style="margin-top:1rem">
+          <label for="message" class="muted">Message</label>
+          <textarea id="message" name="message" required placeholder="How can we help?"></textarea>
+        </div>
+        <button class="btn" type="submit">Send Message</button>
+        <div id="form-status" class="muted" style="margin-top:.5rem"></div>
+      </form>
+      <div class="card">
+        <div class="card-body">
+          <h3>Our Location</h3>
+          <div style="background: rgba(255,255,255,.05); height:240px; border:1px dashed rgba(255,255,255,.2); border-radius:8px; display:grid; place-items:center; color:#bdbdbd">Map Placeholder</div>
+          <div style="margin-top:.6rem" class="muted">123 Crypto Ave, Web3 City</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner container">
+      <div class="footer-brand">WILS</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="news.html">News</a>
+        <a href="markets.html">Markets</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-social">
+        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      </div>
+      <div class="footer-copy">© <span id="year"></span> WILS. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="scripts/main.js"></script>
+  <script>
+    const form = document.getElementById('contact-form');
+    const statusEl = document.getElementById('form-status');
+    form?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form).entries());
+      statusEl.textContent = 'Sending...';
+      // Demo only – replace with your backend or email service
+      setTimeout(()=>{
+        statusEl.textContent = 'Thanks! We\'ll get back to you soon.';
+        form.reset();
+      }, 800);
+    });
+  </script>
+</body>
+</html>
