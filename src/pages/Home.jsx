@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useMemo, useState, useEffect } from 'react';
 import usePolling from '../hooks/usePolling';
+import useWatchlist from '../hooks/useWatchlist';
+import useDocumentTitle from '../hooks/useDocumentTitle';
+import Sparkline from '../components/Sparkline';
 import { fetchMarkets } from '../utils/api';
-import { formatCurrency } from '../utils/format';
+import { formatPrice, formatSignedPercent, formatTimeAgo } from '../utils/format';
 import './Home.css';
 
 const highlights = [
@@ -72,25 +75,22 @@ const testimonials = [
   },
 ];
 
-// Helper to format relative update time
-const formatUpdated = (date) => {
-  if (!date) return '';
-  const diff = Math.floor((Date.now() - date.getTime()) / 1000);
-  if (diff < 5) return 'just now';
-  if (diff < 60) return `${diff}s ago`;
-  const m = Math.floor(diff / 60);
-  if (m < 60) return `${m}m ago`;
-  const h = Math.floor(m / 60);
-  return `${h}h ago`;
-};
-
 function Home() {
+  useDocumentTitle();
+  const { watchlist } = useWatchlist();
+  const [, setTick] = useState(0);
   const { data: markets, loading: liveLoading, error: liveError, lastUpdated, refresh } = usePolling(
     fetchMarkets,
     30000,
     true
   );
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  // Keep the relative "Updated Xs ago" label fresh.
+  useEffect(() => {
+    const id = setInterval(() => setTick((t) => t + 1), 10000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -111,11 +111,16 @@ function Home() {
       symbol: (c.symbol || '').toUpperCase(),
       name: c.name,
       image: c.image,
-      price: formatCurrency(c.current_price, 6),
+      price: formatPrice(c.current_price),
       change: `${(c.price_change_percentage_24h >= 0 ? '+' : '')}${(c.price_change_percentage_24h || 0).toFixed(2)}%`,
       direction: (c.price_change_percentage_24h || 0) >= 0 ? 'up' : 'down',
     }));
   }, [markets]);
+
+  const watched = useMemo(
+    () => (Array.isArray(markets) ? markets.filter((c) => watchlist.includes(c.id)).slice(0, 6) : []),
+    [markets, watchlist]
+  );
 
   return (
     <div className="home">
@@ -148,7 +153,7 @@ function Home() {
               <div className="widget-header">
                 <span className="pill pill-soft">Live snapshot</span>
                 <span className="widget-time">
-                  {liveLoading ? 'Updating…' : liveError ? 'Failed to update' : `Updated ${formatUpdated(lastUpdated)}`}
+                  {liveLoading ? 'Updating…' : liveError ? 'Failed to update' : `Updated ${formatTimeAgo(lastUpdated)}`}
                 </span>
               </div>
               <ul className="widget-list">
@@ -159,10 +164,10 @@ function Home() {
                   <li className="muted">{liveLoading ? 'Loading…' : 'No data available'}</li>
                 )}
                 {signals.map((signal) => (
-                  <li key={signal.symbol}>
+                  <li key={signal.id}>
                     <Link to={`/coin/${signal.id}`} className="widget-asset">
                       <div className="widget-identity">
-                        {signal.image && <img src={signal.image} alt={signal.name} className="widget-icon" />}
+                        {signal.image && <img src={signal.image} alt="" className="widget-icon" />}
                         <div className="widget-names">
                           <span className="widget-symbol">{signal.symbol}</span>
                           <span className="widget-name">{signal.name}</span>
@@ -185,6 +190,35 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {watched.length > 0 && (
+        <section className="home-section container">
+          <div className="section-heading">
+            <span className="eyebrow"><i className="fa-solid fa-star"></i> Your watchlist</span>
+            <h2>Coins you&apos;re tracking</h2>
+          </div>
+          <div className="movers-grid">
+            {watched.map((coin) => (
+              <Link to={`/coin/${coin.id}`} key={coin.id} className="mover-card">
+                <div className="mover-header">
+                  {coin.image && <img src={coin.image} alt="" className="mover-icon" />}
+                  <div className="mover-info">
+                    <span className="mover-name">{coin.name}</span>
+                    <span className="mover-symbol">{coin.symbol.toUpperCase()}</span>
+                  </div>
+                </div>
+                <Sparkline data={coin.sparkline_in_7d?.price} width={220} height={40} />
+                <div className="mover-data">
+                  <span className="mover-price">{formatPrice(coin.current_price)}</span>
+                  <span className={`mover-change ${coin.price_change_percentage_24h >= 0 ? 'up' : 'down'}`}>
+                    {formatSignedPercent(coin.price_change_percentage_24h)}
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       <section className="home-section container">
         <div className="section-heading">
@@ -276,14 +310,14 @@ function Home() {
                 return (
                   <Link to={`/coin/${coin.id}`} key={coin.id} className="mover-card">
                     <div className="mover-header">
-                      {coin.image && <img src={coin.image} alt={coin.name} className="mover-icon" />}
+                      {coin.image && <img src={coin.image} alt="" className="mover-icon" />}
                       <div className="mover-info">
                         <span className="mover-name">{coin.name}</span>
                         <span className="mover-symbol">{coin.symbol.toUpperCase()}</span>
                       </div>
                     </div>
                     <div className="mover-data">
-                      <span className="mover-price">{formatCurrency(coin.current_price, 6)}</span>
+                      <span className="mover-price">{formatPrice(coin.current_price)}</span>
                       <span className={`mover-change ${change >= 0 ? 'up' : 'down'}`}>
                         {change >= 0 ? '+' : ''}{change.toFixed(2)}%
                       </span>
