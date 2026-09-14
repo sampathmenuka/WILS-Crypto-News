@@ -5,6 +5,14 @@
   padding: 1.1rem 0;
 }
 
+/* Scrolled state only changes paint properties. Changing the header's size here would shift the page,
+   re-trigger the scroll threshold and make the sticky header jitter. */
+.header.scrolled .nav-bar {
+  background: rgba(14, 17, 40, 0.95);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 40px rgba(4, 6, 16, 0.6);
+}
+
 .nav-bar {
   position: relative;
   width: min(92%, 1200px);
@@ -19,6 +27,8 @@
   border-radius: 18px;
   box-shadow: 0 24px 50px rgba(8, 11, 26, 0.45);
   backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .logo a {
@@ -104,6 +114,8 @@
 
 .menu-toggle {
   display: none;
+  background: transparent;
+  border: none;
   color: var(--text-primary);
   font-size: 1.35rem;
   cursor: pointer;
@@ -160,5 +172,71 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+/* Phones: slim full-width app bar; navigation lives in the bottom tab bar. */
+@media (max-width: 768px) {
+  .header,
+  .header.scrolled {
+    padding: 0;
+    padding-top: env(safe-area-inset-top);
+    background: rgba(10, 12, 28, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .nav-bar,
+  .header.scrolled .nav-bar {
+    width: 100%;
+    height: 56px;
+    padding: 0 16px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+  }
+
+  .logo-type {
+    font-size: 1.1rem;
+  }
+
+  .menu-toggle,
+  .links,
+  .links.open,
+  .action_btn {
+    display: none;
+  }
+
+  .header-cta {
+    display: inline-flex;
+  }
+}
+
+.header-cta {
+  display: none;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .header-cta {
+    display: inline-flex;
   }
 }

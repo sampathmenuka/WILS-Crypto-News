@@ -1,0 +1,205 @@
+.bottom-nav,
+.more-sheet,
+.sheet-backdrop {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 0.35rem 0.25rem calc(0.35rem + env(safe-area-inset-bottom));
+    background: rgba(10, 12, 28, 0.94);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .bottom-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    min-height: 52px;
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    border-radius: 12px;
+  }
+
+  .bottom-tab:hover {
+    opacity: 1;
+  }
+
+  .bottom-tab-icon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 28px;
+    border-radius: 999px;
+    font-size: 1.05rem;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .bottom-tab.active {
+    color: var(--text-primary);
+  }
+
+  .bottom-tab.active .bottom-tab-icon {
+    background: rgba(124, 92, 255, 0.28);
+    color: #c4b5fd;
+  }
+
+  .bottom-tab:active .bottom-tab-icon {
+    transform: scale(0.92);
+  }
+
+  .bottom-tab-badge {
+    position: absolute;
+    top: -4px;
+    right: 4px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--accent-warm);
+    color: #0b0d1a;
+    font-size: 0.62rem;
+    font-weight: 800;
+    line-height: 17px;
+    text-align: center;
+  }
+
+  /* "More" bottom sheet */
+  .sheet-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 48;
+    background: rgba(3, 4, 12, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+
+  .sheet-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .more-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 49;
+    padding: 0.6rem 1rem calc(76px + env(safe-area-inset-bottom));
+    background: #11142b;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.5);
+    transform: translateY(100%);
+    visibility: hidden;
+    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1), visibility 0.3s;
+  }
+
+  .more-sheet.open {
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .sheet-handle {
+    align-self: center;
+    width: 40px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .sheet-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .sheet-link {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.8rem 0.85rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .sheet-link.active {
+    border-color: rgba(124, 92, 255, 0.45);
+  }
+
+  .sheet-link-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: rgba(124, 92, 255, 0.18);
+    color: var(--accent-soft);
+  }
+
+  .sheet-link-title {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .sheet-link-copy {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .sheet-chevron {
+    margin-left: auto;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+
+  .sheet-socials {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  .sheet-socials a {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(214, 219, 244, 0.85);
+    font-size: 1.1rem;
+  }
+
+  body.sheet-open {
+    overflow: hidden;
+  }
+}
