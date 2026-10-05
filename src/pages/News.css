@@ -93,64 +93,6 @@
   font-size: 1rem;
 }
 
-.search-bar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  max-width: 480px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.search-bar i.fa-search {
-  position: absolute;
-  left: 1rem;
-  color: rgba(214, 219, 244, 0.5);
-  font-size: 0.95rem;
-  pointer-events: none;
-}
-
-.search-bar input {
-  width: 100%;
-  padding: 0.75rem 3rem 0.75rem 2.8rem;
-  background: rgba(13, 16, 34, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  color: var(--text-primary);
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-}
-
-.search-bar input:focus {
-  outline: none;
-  border-color: rgba(124, 92, 255, 0.5);
-  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.15);
-}
-
-.search-bar input::placeholder {
-  color: rgba(214, 219, 244, 0.45);
-}
-
-.clear-search {
-  position: absolute;
-  right: 0.75rem;
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.08);
-  border: none;
-  border-radius: 50%;
-  color: rgba(214, 219, 244, 0.7);
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.clear-search:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: var(--text-primary);
-}
-
 .news-stats {
   display: flex;
   align-items: center;
@@ -308,5 +250,178 @@
 
   .news-footer-cta {
     padding: 2rem 1.5rem;
+  }
+}
+
+/* ---------- Phone layout ---------- */
+
+@media (max-width: 640px) {
+  .news-page {
+    gap: 1rem;
+  }
+
+  .news-hero {
+    padding: 0.4rem 0 0;
+    text-align: left;
+  }
+
+  .news-hero::before {
+    inset: -20px 0;
+  }
+
+  .news-hero-content {
+    gap: 0.35rem;
+    margin: 0;
+  }
+
+  .news-hero h1 {
+    font-size: 1.65rem;
+    line-height: 1.2;
+  }
+
+  .news-hero p {
+    font-size: 0.9rem;
+  }
+
+  .news-controls {
+    flex-direction: column-reverse;
+    gap: 0.7rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .category-filter {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 0 16px;
+    margin: 0 -16px;
+    gap: 0.45rem;
+    background: none;
+    border: none;
+    backdrop-filter: none;
+    scrollbar-width: none;
+  }
+
+  .category-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .category-btn {
+    flex-shrink: 0;
+    min-height: 38px;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.86rem;
+  }
+
+  .category-btn.active {
+    box-shadow: none;
+  }
+
+  .search-bar {
+    max-width: none;
+  }
+
+  .news-stats {
+    margin-bottom: 0.7rem;
+    font-size: 0.82rem;
+  }
+
+  .news-grid {
+    gap: 0.6rem;
+  }
+
+  /* Compact list cards: thumbnail + text, whole card tappable */
+  .news-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 0.85rem;
+    padding: 0.9rem;
+    border-radius: 14px;
+    box-shadow: none;
+  }
+
+  .news-card img {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    object-fit: cover;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .news-card .card-body {
+    padding: 0;
+    gap: 0.3rem;
+  }
+
+  .news-card .meta {
+    margin-bottom: 0 !important;
+    font-size: 0.7rem;
+  }
+
+  .news-card .meta .pill {
+    font-size: 0.62rem;
+    padding: 0.15rem 0.5rem;
+  }
+
+  .news-card .meta .chip {
+    font-size: 0.7rem;
+    padding: 0.12rem 0.4rem;
+  }
+
+  .news-card h3 {
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .news-card p {
+    font-size: 0.84rem;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .news-card .read-more {
+    position: static;
+    font-size: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .news-card .read-more::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .news-card:active {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .news-footer-cta {
+    margin-top: 1.2rem;
+    padding: 1.5rem 1.2rem;
+    border-radius: 16px;
+  }
+
+  .cta-content h3 {
+    font-size: 1.3rem;
+  }
+
+  .cta-content p {
+    font-size: 0.92rem;
+  }
+
+  .cta-content .btn {
+    width: 100%;
+  }
+
+  .news-loading,
+  .news-error,
+  .news-empty {
+    min-height: 220px;
+    padding: 2rem 1rem;
   }
 }

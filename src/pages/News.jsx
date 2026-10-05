@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NewsCard from '../components/NewsCard';
 import { fetchNews } from '../utils/api';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import './News.css';
 
 const categories = [
@@ -14,28 +15,26 @@ const categories = [
 ];
 
 function News() {
+  useDocumentTitle('News');
   const [category, setCategory] = useState('all');
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [reloadKey, setReloadKey] = useState(0);
 
   useEffect(() => {
-    const loadNews = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await fetchNews(category);
-        setNews(data);
-      } catch (err) {
-        setError(err.message || 'Failed to load news');
-      } finally {
-        setLoading(false);
-      }
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    fetchNews(category)
+      .then((data) => !cancelled && setNews(data))
+      .catch((err) => !cancelled && setError(err.message || 'Failed to load news'))
+      .finally(() => !cancelled && setLoading(false));
+    return () => {
+      cancelled = true;
     };
-
-    loadNews();
-  }, [category]);
+  }, [category, reloadKey]);
 
   const filteredNews = news.filter((article) => {
     if (!searchQuery) return true;
@@ -62,11 +61,12 @@ function News() {
         </div>
 
         <div className="news-controls">
-          <div className="category-filter">
+          <div className="category-filter" role="group" aria-label="Filter by category">
             {categories.map((cat) => (
               <button
                 key={cat.value}
                 className={`category-btn ${category === cat.value ? 'active' : ''}`}
+                aria-pressed={category === cat.value}
                 onClick={() => setCategory(cat.value)}
               >
                 <i className={cat.icon}></i>
@@ -76,15 +76,16 @@ function News() {
           </div>
 
           <div className="search-bar">
-            <i className="fa-solid fa-search"></i>
+            <i className="fa-solid fa-search" aria-hidden="true"></i>
             <input
-              type="text"
+              type="search"
+              aria-label="Search news"
               placeholder="Search news..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             {searchQuery && (
-              <button className="clear-search" onClick={() => setSearchQuery('')}>
+              <button className="clear-search" onClick={() => setSearchQuery('')} aria-label="Clear search">
                 <i className="fa-solid fa-xmark"></i>
               </button>
             )}
@@ -92,17 +93,17 @@ function News() {
         </div>
 
         {loading && (
-          <div className="news-loading">
+          <div className="news-loading" role="status">
             <div className="loading-spinner"></div>
             <p>Loading latest news...</p>
           </div>
         )}
 
         {error && (
-          <div className="news-error">
+          <div className="news-error" role="alert">
             <i className="fa-solid fa-circle-exclamation"></i>
             <p>{error}</p>
-            <button className="btn secondary" onClick={() => window.location.reload()}>
+            <button className="btn secondary" onClick={() => setReloadKey((k) => k + 1)}>
               Retry
             </button>
           </div>
